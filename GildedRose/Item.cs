@@ -1,22 +1,27 @@
 using System;
 
-public class Item
+namespace GildedRose
 {
-    private String name;
-
-    public Item(string name, int sellIn, int quality)
+    public abstract class Item
     {
-        this.name = name;
-        this.Quality = quality;
-        this.SellIn = sellIn;
-    }
+        private String name;
 
-    public int SellIn { get; set; }
+        protected Item(string name, int sellIn, int quality)
+        {
+            this.name = name;
+            Quality = quality;
+            SellIn = sellIn;
+        }
 
-    public int Quality { get; set; }
+        public int SellIn { get; set; }
 
-    public string Name
-    {
-        get { return name; }
+        public int Quality { get; set; }
+
+        public string Name
+        {
+            get { return name; }
+        }
+
+        public abstract void Process();
     }
 }

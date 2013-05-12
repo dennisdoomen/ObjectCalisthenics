@@ -152,7 +152,7 @@ namespace GildedRose.Specs
             int quality = RandomQuality();
             int sellIn = RandomSellIn();
             
-            return new Item("Backstage passes to a TAFKAL80ETC concert", sellIn, quality);
+            return new BackstagePasses(sellIn, quality);
         }
     }
 }
