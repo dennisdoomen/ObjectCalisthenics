@@ -15,12 +15,9 @@ namespace GildedRose
             
             SellIn = SellIn - 1;
 
-            if (SellIn < 0)
+            if (SellIn < 0 && Quality < 50)
             {
-                if (Quality < 50)
-                {
-                    Quality = Quality + 1;
-                }
+                Quality = Quality + 1;
             }
         }
     }
