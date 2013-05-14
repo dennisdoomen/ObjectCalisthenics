@@ -2,7 +2,7 @@ namespace GildedRose
 {
     public class BackstagePasses : Item
     {
-        public BackstagePasses(int sellIn, int quality)
+        public BackstagePasses(int sellIn, Quality quality)
             : base("Backstage passes to a TAFKAL80ETC concert", sellIn, quality)
         {
         }

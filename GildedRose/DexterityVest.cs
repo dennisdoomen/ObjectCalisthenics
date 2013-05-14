@@ -4,7 +4,7 @@ namespace GildedRose
 {
     public class DexterityVest : Item
     {
-        public DexterityVest(int sellIn, int quality)
+        public DexterityVest(int sellIn, Quality quality)
             : base("+5 Dexterity Vest", sellIn, quality)
         {
         }

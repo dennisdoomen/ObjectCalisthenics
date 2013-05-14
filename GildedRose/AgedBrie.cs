@@ -2,7 +2,7 @@ namespace GildedRose
 {
     public class AgedBrie : Item
     {
-        public AgedBrie(int sellIn, int quality) : base("Aged Brie", sellIn, quality)
+        public AgedBrie(int sellIn, Quality quality) : base("Aged Brie", sellIn, quality)
         {
         }
 

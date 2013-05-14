@@ -6,7 +6,7 @@ namespace GildedRose
     {
         private String name;
 
-        protected Item(string name, int sellIn, int quality)
+        protected Item(string name, int sellIn, Quality quality)
         {
             this.name = name;
             Quality = quality;
@@ -15,7 +15,7 @@ namespace GildedRose
 
         public int SellIn { get; set; }
 
-        public int Quality { get; set; }
+        public Quality Quality { get; set; }
 
         public string Name
         {

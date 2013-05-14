@@ -2,7 +2,7 @@ namespace GildedRose
 {
     public class ConjuredManaCake : Item
     {
-        public ConjuredManaCake(int sellIn, int quality)
+        public ConjuredManaCake(int sellIn, Quality quality)
             : base("Conjured Mana Cake", sellIn, quality)
         {
         }

@@ -15,12 +15,12 @@ namespace GildedRose
         {
             return new List<Item>
             {
-                new DexterityVest(10, 20),
-                new AgedBrie(2, 0),
-                new ElixirOfTheMongoose(5, 7),
-                new Sulfuras(0, 80),
-                new BackstagePasses(15, 20),
-                new ConjuredManaCake(3, 6)
+                new DexterityVest(10, new Quality(20)),
+                new AgedBrie(2, new Quality(0)),
+                new ElixirOfTheMongoose(5, new Quality(7)),
+                new Sulfuras(0, new Quality(80)),
+                new BackstagePasses(15, new Quality(20)),
+                new ConjuredManaCake(3, new Quality(6))
             };
         }
 

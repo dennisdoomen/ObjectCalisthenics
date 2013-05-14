@@ -2,7 +2,7 @@ namespace GildedRose
 {
     public class ElixirOfTheMongoose : Item
     {
-        public ElixirOfTheMongoose(int sellIn, int quality)
+        public ElixirOfTheMongoose(int sellIn, Quality quality)
             : base("Elixir of the Mongoose", sellIn, quality)
         {
         }
