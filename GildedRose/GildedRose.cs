@@ -28,7 +28,7 @@ namespace GildedRose
         {
             foreach (var item in list)
             {
-                item.Process();
+                item.UpdateQuality();
             }
         }
     }

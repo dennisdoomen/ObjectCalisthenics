@@ -6,7 +6,7 @@ namespace GildedRose
         {
         }
 
-        public override void Process()
+        public override void UpdateQuality()
         {
             if (Name != "Aged Brie" && Name != "Backstage passes to a TAFKAL80ETC concert")
             {
