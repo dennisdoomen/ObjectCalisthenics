@@ -7,7 +7,7 @@ namespace GildedRose
         {
         }
 
-        public override void Process()
+        public override void UpdateQuality()
         {
             if (Quality < 50)
             {

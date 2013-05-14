@@ -22,6 +22,6 @@ namespace GildedRose
             get { return name; }
         }
 
-        public abstract void Process();
+        public abstract void UpdateQuality();
     }
 }
