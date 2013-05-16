@@ -14,6 +14,11 @@ namespace GildedRose
             this.value = value;
         }
 
+        public static implicit operator Quality(int value)
+        {
+            return new Quality((uint)value);
+        }
+
         public static bool operator ==(Quality left, Quality right)
         {
             return left.Equals(right);
@@ -22,6 +27,11 @@ namespace GildedRose
         public static bool operator !=(Quality left, Quality right)
         {
             return !left.Equals(right);
+        }
+
+        public bool IsSufficient
+        {
+            get { return value >= 50; }
         }
 
         public bool Equals(Quality other)
@@ -35,6 +45,7 @@ namespace GildedRose
             {
                 return false;
             }
+
             return obj is Quality && Equals((Quality)obj);
         }
 
@@ -46,6 +57,26 @@ namespace GildedRose
         public override string ToString()
         {
             return value.ToString();
+        }
+
+        public Quality Decrease()
+        {
+            if (value > 0)
+            {
+                return new Quality(value - 1);
+            }
+
+            return this;
+        }
+
+        public Quality Increase()
+        {
+            if (!IsSufficient)
+            {
+                return new Quality(value + 1);
+            }
+
+            return this;
         }
     }
 }

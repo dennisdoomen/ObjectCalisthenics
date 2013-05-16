@@ -9,18 +9,18 @@ namespace GildedRose
 
         public override void UpdateQuality()
         {
-            if (Quality < 50)
+            if (!Quality.IsSufficient)
             {
-                Quality = Quality + 1;
+                Quality = Quality.Increase();
 
-                if (SellIn < 11 && Quality < 50)
+                if (SellIn < 11)
                 {
-                    Quality = Quality + 1;
+                    Quality = Quality.Increase();
                 }
 
-                if (SellIn < 6 && Quality < 50)
+                if (SellIn < 6)
                 {
-                    Quality = Quality + 1;
+                    Quality = Quality.Increase();
                 }
             }
 
@@ -28,7 +28,7 @@ namespace GildedRose
 
             if (SellIn < 0)
             {
-                Quality = Quality - Quality;
+                Quality = new Quality();
             }
         }
     }

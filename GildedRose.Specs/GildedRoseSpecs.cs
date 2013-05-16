@@ -43,7 +43,7 @@ namespace GildedRose.Specs
             });
             
             var qualities = items.Select(i => i.Quality);
-            qualities.Should().BeEquivalentTo(new[] { 19, 1, 6, 80, 21, 5 });
+            qualities.Should().BeEquivalentTo(new Quality[] { 19, 1, 6, 80, 21, 5 });
             
             var sellIns = items.Select(i => i.SellIn);
             sellIns.Should().BeEquivalentTo(new[] { 9, 1, 4, 0, 14, 2 });
@@ -66,7 +66,7 @@ namespace GildedRose.Specs
             });
             
             var qualities = items.Select(i => i.Quality);
-            qualities.Should().BeEquivalentTo(new[] { 17, 4, 4, 80, 23, 3 });
+            qualities.Should().BeEquivalentTo(new Quality[] { 17, 4, 4, 80, 23, 3 });
             
             var sellIns = items.Select(i => i.SellIn);
             sellIns.Should().BeEquivalentTo(new[] { 7, -1, 2, 0, 12, 0 });
@@ -89,7 +89,7 @@ namespace GildedRose.Specs
             });
             
             var qualities = items.Select(i => i.Quality);
-            qualities.Should().BeEquivalentTo(new int[] { 0, 50, 0, 80, 0, 0 });
+            qualities.Should().BeEquivalentTo(new Quality[] { 0, 50, 0, 80, 0, 0 });
             
             var sellIns = items.Select(i => i.SellIn);
             sellIns.Should().BeEquivalentTo(new int[] { -490, -498, -495, 0, -485, -497 });
@@ -102,7 +102,7 @@ namespace GildedRose.Specs
             RepeatUpdateQuality(11);
             
             var qualities = items.Select(i => i.Quality);
-            qualities.Should().BeEquivalentTo(new int[]
+            qualities.Should().BeEquivalentTo(new Quality[]
             {
                 0, 49, 18, 33, 0, 28, 0, 12, 34, 25, 0, 0, 50, 12, 0, 0, 11, 0, 50, 28, 0, 0, 0, 0, 45, 0, 24, 50, 31, 50, 50, 0, 0, 0, 45, 29, 
                 50, 0, 0, 47, 49, 50, 27, 26, 50, 0, 27, 36, 0, 27, 46, 33, 50, 0, 50, 0, 31, 0, 0, 50, 0, 15, 0, 47, 30, 0, 0, 0, 0, 15, 0, 0, 
@@ -142,14 +142,14 @@ namespace GildedRose.Specs
             return rand.Next(MaxBackstageSellin);
         }
 
-        private int RandomQuality()
+        private Quality RandomQuality()
         {
-            return rand.Next(MaxQuality);
+            return new Quality((uint)rand.Next(MaxQuality));
         }
 
         private Item ARandomBackstagePass()
         {
-            int quality = RandomQuality();
+            Quality quality = RandomQuality();
             int sellIn = RandomSellIn();
             
             return new BackstagePasses(sellIn, quality);
