@@ -4,7 +4,7 @@ namespace GildedRose
 {
     public class DexterityVest : Item
     {
-        public DexterityVest(int sellIn, Quality quality)
+        public DexterityVest(SellInDays sellIn, Quality quality)
             : base("+5 Dexterity Vest", sellIn, quality)
         {
         }
@@ -13,9 +13,9 @@ namespace GildedRose
         {
             Quality = Quality.Decrease();
 
-            SellIn = SellIn - 1;
+            SellInDays = SellInDays.Decrement();
 
-            if (SellIn < 0)
+            if (SellInDays.IsOverdue)
             {
                 Quality = Quality.Decrease();
             }

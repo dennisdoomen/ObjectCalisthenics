@@ -2,7 +2,7 @@ namespace GildedRose
 {
     public class BackstagePasses : Item
     {
-        public BackstagePasses(int sellIn, Quality quality)
+        public BackstagePasses(SellInDays sellIn, Quality quality)
             : base("Backstage passes to a TAFKAL80ETC concert", sellIn, quality)
         {
         }
@@ -13,20 +13,19 @@ namespace GildedRose
             {
                 Quality = Quality.Increase();
 
-                if (SellIn < 11)
+                if (SellInDays < 11)
                 {
                     Quality = Quality.Increase();
                 }
 
-                if (SellIn < 6)
+                if (SellInDays < 6)
                 {
                     Quality = Quality.Increase();
                 }
             }
 
-            SellIn = SellIn - 1;
-
-            if (SellIn < 0)
+            SellInDays = SellInDays.Decrement();
+            if (SellInDays.IsOverdue)
             {
                 Quality = new Quality();
             }

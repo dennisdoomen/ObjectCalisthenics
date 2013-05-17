@@ -45,8 +45,8 @@ namespace GildedRose.Specs
             var qualities = items.Select(i => i.Quality);
             qualities.Should().BeEquivalentTo(new Quality[] { 19, 1, 6, 80, 21, 5 });
             
-            var sellIns = items.Select(i => i.SellIn);
-            sellIns.Should().BeEquivalentTo(new[] { 9, 1, 4, 0, 14, 2 });
+            var sellIns = items.Select(i => i.SellInDays);
+            sellIns.Should().BeEquivalentTo(new SellInDays[] { 9, 1, 4, 0, 14, 2 });
         }
 
         [TestMethod]
@@ -68,8 +68,8 @@ namespace GildedRose.Specs
             var qualities = items.Select(i => i.Quality);
             qualities.Should().BeEquivalentTo(new Quality[] { 17, 4, 4, 80, 23, 3 });
             
-            var sellIns = items.Select(i => i.SellIn);
-            sellIns.Should().BeEquivalentTo(new[] { 7, -1, 2, 0, 12, 0 });
+            var sellIns = items.Select(i => i.SellInDays);
+            sellIns.Should().BeEquivalentTo(new SellInDays[] { 7, -1, 2, 0, 12, 0 });
         }
 
         [TestMethod]
@@ -91,8 +91,8 @@ namespace GildedRose.Specs
             var qualities = items.Select(i => i.Quality);
             qualities.Should().BeEquivalentTo(new Quality[] { 0, 50, 0, 80, 0, 0 });
             
-            var sellIns = items.Select(i => i.SellIn);
-            sellIns.Should().BeEquivalentTo(new int[] { -490, -498, -495, 0, -485, -497 });
+            var sellIns = items.Select(i => i.SellInDays);
+            sellIns.Should().BeEquivalentTo(new SellInDays[] { -490, -498, -495, 0, -485, -497 });
         }
 
         [TestMethod]
@@ -109,8 +109,8 @@ namespace GildedRose.Specs
                 36, 50, 45, 50, 37, 43, 48, 50, 13, 0, 0, 50, 39, 47, 0, 24, 30, 42, 22, 50, 0, 50, 0, 38, 41, 50, 36, 43
             });
             
-            var sellIns = items.Select(i => i.SellIn);
-            sellIns.Should().BeEquivalentTo(new int[]
+            var sellIns = items.Select(i => i.SellInDays);
+            sellIns.Should().BeEquivalentTo(new SellInDays[]
             {
                 -9, 10, 15, 6, -11, 6, -7, 18, 14, 15, -10, -11, 3, 9, -4, -4, 14, -7, 18, 0, -8, -1, -4, -7, 14, -9, 2, 11, 11, 8, 10, -4, -11, 
                 -10, 15, 3, 15, -8, -2, 4, 14, 11, 8, 5, 10, -10, 0, 10, -3, 1, 8, 13, 3, -7, 11, -8, 1, -11, -5, 7, -11, 18, -7, 0, 12, -5, -6, 
@@ -137,9 +137,9 @@ namespace GildedRose.Specs
             return listOfPasses;
         }
 
-        private int RandomSellIn()
+        private SellInDays RandomSellIn()
         {
-            return rand.Next(MaxBackstageSellin);
+            return new SellInDays(rand.Next(MaxBackstageSellin));
         }
 
         private Quality RandomQuality()
@@ -150,7 +150,7 @@ namespace GildedRose.Specs
         private Item ARandomBackstagePass()
         {
             Quality quality = RandomQuality();
-            int sellIn = RandomSellIn();
+            SellInDays sellIn = RandomSellIn();
             
             return new BackstagePasses(sellIn, quality);
         }

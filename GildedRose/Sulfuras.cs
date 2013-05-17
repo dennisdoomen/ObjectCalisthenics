@@ -2,7 +2,7 @@ namespace GildedRose
 {
     public class Sulfuras : Item
     {
-        public Sulfuras(int sellIn, Quality quality)
+        public Sulfuras(SellInDays sellIn, Quality quality)
             : base("Sulfuras, Hand of Ragnaros", sellIn, quality)
         {
         }

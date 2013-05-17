@@ -2,7 +2,8 @@ namespace GildedRose
 {
     public class AgedBrie : Item
     {
-        public AgedBrie(int sellIn, Quality quality) : base("Aged Brie", sellIn, quality)
+        public AgedBrie(SellInDays sellIn, Quality quality)
+            : base("Aged Brie", sellIn, quality)
         {
         }
 
@@ -10,9 +11,8 @@ namespace GildedRose
         {
             Quality = Quality.Increase();
 
-            SellIn = SellIn - 1;
-
-            if (SellIn < 0)
+            SellInDays = SellInDays.Decrement();
+            if (SellInDays.IsOverdue)
             {
                 Quality = Quality.Increase();
             }

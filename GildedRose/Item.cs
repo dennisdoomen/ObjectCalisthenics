@@ -4,16 +4,16 @@ namespace GildedRose
 {
     public abstract class Item
     {
-        private String name;
+        private readonly String name;
 
-        protected Item(string name, int sellIn, Quality quality)
+        protected Item(string name, SellInDays sellIn, Quality quality)
         {
             this.name = name;
             Quality = quality;
-            SellIn = sellIn;
+            SellInDays = sellIn;
         }
 
-        public int SellIn { get; set; }
+        public SellInDays SellInDays { get; set; }
 
         public Quality Quality { get; set; }
 

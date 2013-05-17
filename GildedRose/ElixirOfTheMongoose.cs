@@ -2,7 +2,7 @@ namespace GildedRose
 {
     public class ElixirOfTheMongoose : Item
     {
-        public ElixirOfTheMongoose(int sellIn, Quality quality)
+        public ElixirOfTheMongoose(SellInDays sellIn, Quality quality)
             : base("Elixir of the Mongoose", sellIn, quality)
         {
         }
@@ -11,8 +11,9 @@ namespace GildedRose
         {
             Quality = Quality.Decrease();
 
-            SellIn = SellIn - 1;
-            if (SellIn < 0)
+            SellInDays = SellInDays.Decrement();
+
+            if (SellInDays.IsOverdue)
             {
                 Quality = Quality.Decrease();
             }
