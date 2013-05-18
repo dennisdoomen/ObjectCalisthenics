@@ -1,6 +1,8 @@
+using System;
+
 namespace GildedRose
 {
-    public struct SellInDays
+    public struct SellInDays : IComparable
     {
         private readonly int value;
 
@@ -39,6 +41,11 @@ namespace GildedRose
             get { return value < 0; }
         }
 
+        public int DaysOverdue
+        {
+            get { return -value; }
+        }
+
         public bool Equals(SellInDays other)
         {
             return value == other.value;
@@ -59,6 +66,11 @@ namespace GildedRose
             return (int)value;
         }
 
+        public int CompareTo(object obj)
+        {
+            return value.CompareTo(((SellInDays)obj).value);
+        }
+
         public override string ToString()
         {
             return value.ToString();
@@ -67,11 +79,6 @@ namespace GildedRose
         public SellInDays Decrement()
         {
             return new SellInDays(value - 1);
-        }
-
-        public SellInDays Increment()
-        {
-            return new SellInDays(value + 1);
         }
     }
 }

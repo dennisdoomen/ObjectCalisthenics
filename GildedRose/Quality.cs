@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace GildedRose
 {
-    public struct Quality
+    public struct Quality : IComparable
     {
         private readonly uint value;
 
@@ -52,6 +49,11 @@ namespace GildedRose
         public override int GetHashCode()
         {
             return (int)value;
+        }
+
+        public int CompareTo(object obj)
+        {
+            return value.CompareTo(((Quality)obj).value);
         }
 
         public override string ToString()

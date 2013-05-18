@@ -122,7 +122,10 @@ namespace GildedRose.Specs
         {
             for (int i = 0; i < times; i++)
             {
-                gildedRose.UpdateQuality(items);
+                foreach (var item in items)
+                {
+                    item.UpdateQuality();
+                }
             }
         }
 
