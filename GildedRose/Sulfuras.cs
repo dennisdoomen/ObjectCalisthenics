@@ -7,7 +7,7 @@ namespace GildedRose
         {
         }
 
-        public override void UpdateQuality()
+        public override void HandleDayChange()
         {
         }
     }

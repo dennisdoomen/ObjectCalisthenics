@@ -16,21 +16,21 @@ namespace GildedRose.Specs
         private const int MaxBackstageSellin = 30;
         private const int MaxQuality = 50;
         private GildedRose gildedRose;
-        private List<Item> items;
+        private Inventory inventory;
         private Random rand = new Random(3456789);
 
         [TestInitialize]
         public void Setup()
         {
             gildedRose = new GildedRose();
-            items = gildedRose.MakeItems();
+            inventory = gildedRose.CreateInventory();
         }
 
         [TestMethod]
         public void After_one_day()
         {
             RepeatUpdateQuality(1);
-            var itemNames = items.Select(i => i.Name);
+            var itemNames = inventory.Select(i => i.Name);
             
             itemNames.Should().BeEquivalentTo(new[]
             {
@@ -42,10 +42,10 @@ namespace GildedRose.Specs
                 "Conjured Mana Cake"
             });
             
-            var qualities = items.Select(i => i.Quality);
+            var qualities = inventory.Select(i => i.Quality);
             qualities.Should().BeEquivalentTo(new Quality[] { 19, 1, 6, 80, 21, 5 });
             
-            var sellIns = items.Select(i => i.SellInDays);
+            var sellIns = inventory.Select(i => i.SellInDays);
             sellIns.Should().BeEquivalentTo(new SellInDays[] { 9, 1, 4, 0, 14, 2 });
         }
 
@@ -54,7 +54,7 @@ namespace GildedRose.Specs
         {
             RepeatUpdateQuality(3);
             
-            var itemNames = items.Select(i => i.Name);
+            var itemNames = inventory.Select(i => i.Name);
             itemNames.Should().BeEquivalentTo(new[]
             {
                 "+5 Dexterity Vest",
@@ -65,10 +65,10 @@ namespace GildedRose.Specs
                 "Conjured Mana Cake"
             });
             
-            var qualities = items.Select(i => i.Quality);
+            var qualities = inventory.Select(i => i.Quality);
             qualities.Should().BeEquivalentTo(new Quality[] { 17, 4, 4, 80, 23, 3 });
             
-            var sellIns = items.Select(i => i.SellInDays);
+            var sellIns = inventory.Select(i => i.SellInDays);
             sellIns.Should().BeEquivalentTo(new SellInDays[] { 7, -1, 2, 0, 12, 0 });
         }
 
@@ -77,7 +77,7 @@ namespace GildedRose.Specs
         {
             RepeatUpdateQuality(500);
 
-            var itemNames = items.Select(i => i.Name);
+            var itemNames = inventory.Select(i => i.Name);
             itemNames.Should().BeEquivalentTo(new string[]
             {
                 "+5 Dexterity Vest",
@@ -88,20 +88,20 @@ namespace GildedRose.Specs
                 "Conjured Mana Cake"
             });
             
-            var qualities = items.Select(i => i.Quality);
+            var qualities = inventory.Select(i => i.Quality);
             qualities.Should().BeEquivalentTo(new Quality[] { 0, 50, 0, 80, 0, 0 });
             
-            var sellIns = items.Select(i => i.SellInDays);
+            var sellIns = inventory.Select(i => i.SellInDays);
             sellIns.Should().BeEquivalentTo(new SellInDays[] { -490, -498, -495, 0, -485, -497 });
         }
 
         [TestMethod]
         public void Backstage_pass_golden_copy()
         {
-            items = ABunchOfBackstagePasses();
+            inventory = ABunchOfBackstagePasses();
             RepeatUpdateQuality(11);
             
-            var qualities = items.Select(i => i.Quality);
+            var qualities = inventory.Select(i => i.Quality);
             qualities.Should().BeEquivalentTo(new Quality[]
             {
                 0, 49, 18, 33, 0, 28, 0, 12, 34, 25, 0, 0, 50, 12, 0, 0, 11, 0, 50, 28, 0, 0, 0, 0, 45, 0, 24, 50, 31, 50, 50, 0, 0, 0, 45, 29, 
@@ -109,7 +109,7 @@ namespace GildedRose.Specs
                 36, 50, 45, 50, 37, 43, 48, 50, 13, 0, 0, 50, 39, 47, 0, 24, 30, 42, 22, 50, 0, 50, 0, 38, 41, 50, 36, 43
             });
             
-            var sellIns = items.Select(i => i.SellInDays);
+            var sellIns = inventory.Select(i => i.SellInDays);
             sellIns.Should().BeEquivalentTo(new SellInDays[]
             {
                 -9, 10, 15, 6, -11, 6, -7, 18, 14, 15, -10, -11, 3, 9, -4, -4, 14, -7, 18, 0, -8, -1, -4, -7, 14, -9, 2, 11, 11, 8, 10, -4, -11, 
@@ -122,22 +122,22 @@ namespace GildedRose.Specs
         {
             for (int i = 0; i < times; i++)
             {
-                foreach (var item in items)
+                foreach (var item in inventory)
                 {
-                    item.UpdateQuality();
+                    item.HandleDayChange();
                 }
             }
         }
 
-        private List<Item> ABunchOfBackstagePasses()
+        private Inventory ABunchOfBackstagePasses()
         {
-            var listOfPasses = new List<Item>();
+            var inventory = new Inventory();
             for (int i = 0; i < 100; i++)
             {
-                listOfPasses.Add(ARandomBackstagePass());
+                inventory.Add(ARandomBackstagePass());
             }
 
-            return listOfPasses;
+            return inventory;
         }
 
         private SellInDays RandomSellIn()
@@ -155,7 +155,7 @@ namespace GildedRose.Specs
             Quality quality = RandomQuality();
             SellInDays sellIn = RandomSellIn();
             
-            return new BackstagePasses(sellIn, quality);
+            return new BackstagePass(sellIn, quality);
         }
     }
 }

@@ -22,7 +22,12 @@ namespace GildedRose
             get { return name; }
         }
 
-        public abstract void UpdateQuality();
+        public int DaysOverdue
+        {
+            get { return SellInDays.DaysOverdue; }
+        }
+
+        public abstract void HandleDayChange();
 
         public override string ToString()
         {

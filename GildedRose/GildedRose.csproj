@@ -44,11 +44,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AgedBrie.cs" />
-    <Compile Include="BackstagePasses.cs" />
+    <Compile Include="BackstagePass.cs" />
     <Compile Include="ConjuredManaCake.cs" />
     <Compile Include="DexterityVest.cs" />
     <Compile Include="ElixirOfTheMongoose.cs" />
     <Compile Include="GildedRose.cs" />
+    <Compile Include="Inventory.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Quality.cs" />

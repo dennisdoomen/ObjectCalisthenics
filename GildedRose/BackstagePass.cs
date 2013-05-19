@@ -1,13 +1,13 @@
 namespace GildedRose
 {
-    public class BackstagePasses : Item
+    public class BackstagePass : Item
     {
-        public BackstagePasses(SellInDays sellIn, Quality quality)
+        public BackstagePass(SellInDays sellIn, Quality quality)
             : base("Backstage passes to a TAFKAL80ETC concert", sellIn, quality)
         {
         }
 
-        public override void UpdateQuality()
+        public override void HandleDayChange()
         {
             if (!Quality.IsSufficient)
             {
