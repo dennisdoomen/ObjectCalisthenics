@@ -23,5 +23,10 @@ namespace GildedRose
         }
 
         public abstract void UpdateQuality();
+
+        public override string ToString()
+        {
+            return name;
+        }
     }
 }

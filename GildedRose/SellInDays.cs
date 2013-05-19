@@ -43,7 +43,7 @@ namespace GildedRose
 
         public int DaysOverdue
         {
-            get { return -value; }
+            get { return Math.Max(0, -value); }
         }
 
         public bool Equals(SellInDays other)

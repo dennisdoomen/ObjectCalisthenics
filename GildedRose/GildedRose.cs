@@ -14,7 +14,10 @@ namespace GildedRose
 
             foreach (var item in items)
             {
-                item.UpdateQuality();
+                for (int days = 0; days < 5; days++)
+                {
+                    item.UpdateQuality();
+                }
             }
 
             var highestValueItem = items.OrderBy(i => i.Quality).Last();
@@ -22,10 +25,13 @@ namespace GildedRose
                 highestValueItem, 
                 highestValueItem.Quality);
 
-            var dueItem = items.OrderBy(i => i.SellInDays).First();
-            Console.WriteLine("The item (almost) due for selling is a {0} with {1} days left to sell",
-                dueItem,
-                dueItem.SellInDays);
+            IEnumerable<Item> itemsOverdue = items.Where(i => i.SellInDays.IsOverdue);
+            foreach (var item in itemsOverdue)
+            {
+                Console.WriteLine("The item {0} is {1} day(s) overdue",
+                    item,
+                    item.SellInDays.DaysOverdue);
+            }
         }
 
         public List<Item> MakeItems()
