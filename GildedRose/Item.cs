@@ -4,7 +4,7 @@ namespace GildedRose
 {
     public abstract class Item
     {
-        private readonly String name;
+        private readonly string name;
 
         protected Item(string name, SellInDays sellIn, Quality quality)
         {
