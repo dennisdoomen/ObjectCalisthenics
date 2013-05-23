@@ -11,11 +11,6 @@ namespace GildedRose
             this.value = value;
         }
 
-        public static implicit operator SellInDays(int value)
-        {
-            return new SellInDays(value);
-        }
-
         public static bool operator ==(SellInDays left, SellInDays right)
         {
             return left.Equals(right);

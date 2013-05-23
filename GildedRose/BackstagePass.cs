@@ -13,12 +13,12 @@ namespace GildedRose
             {
                 Quality = Quality.Increase();
 
-                if (SellInDays < 11)
+                if (SellInDays < new SellInDays(11))
                 {
                     Quality = Quality.Increase();
                 }
 
-                if (SellInDays < 6)
+                if (SellInDays < new SellInDays(6))
                 {
                     Quality = Quality.Increase();
                 }

@@ -43,5 +43,10 @@ namespace GildedRose
                 }
             }
         }
+
+        public Item this[string dexterityVest]
+        {
+            get { throw new System.NotImplementedException(); }
+        }
     }
 }

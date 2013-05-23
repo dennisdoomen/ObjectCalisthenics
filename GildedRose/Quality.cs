@@ -11,11 +11,6 @@ namespace GildedRose
             this.value = value;
         }
 
-        public static implicit operator Quality(int value)
-        {
-            return new Quality((uint)value);
-        }
-
         public static bool operator ==(Quality left, Quality right)
         {
             return left.Equals(right);

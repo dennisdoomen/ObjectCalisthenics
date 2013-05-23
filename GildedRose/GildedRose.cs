@@ -30,12 +30,12 @@ namespace GildedRose
         {
             return new Inventory
             {
-                new DexterityVest(10, new Quality(20)),
-                new AgedBrie(2, new Quality(0)),
-                new ElixirOfTheMongoose(5, new Quality(7)),
-                new Sulfuras(0, new Quality(80)),
-                new BackstagePass(15, new Quality(20)),
-                new ConjuredManaCake(3, new Quality(6))
+                new DexterityVest(new SellInDays(10), new Quality(20)),
+                new AgedBrie(new SellInDays(2), new Quality(0)),
+                new ElixirOfTheMongoose(new SellInDays(5), new Quality(7)),
+                new Sulfuras(new SellInDays(0), new Quality(80)),
+                new BackstagePass(new SellInDays(15), new Quality(20)),
+                new ConjuredManaCake(new SellInDays(3), new Quality(6))
             };
         }
     }
