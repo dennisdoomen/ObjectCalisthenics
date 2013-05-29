@@ -14,9 +14,7 @@ namespace GildedRose
 
             var highestValueItem = inventory.HighestValued;
 
-            Console.WriteLine("The highest value item is a {0} with quality {1}",
-                highestValueItem,
-                highestValueItem.Quality);
+            Console.WriteLine("The highest valued item is {0}", highestValueItem);
 
             foreach (var item in inventory.Overdue)
             {

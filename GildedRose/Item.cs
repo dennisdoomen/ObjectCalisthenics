@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace GildedRose
 {
@@ -13,20 +14,30 @@ namespace GildedRose
             SellInDays = sellIn;
         }
 
-        public SellInDays SellInDays { get; set; }
+        protected SellInDays SellInDays { get; set; }
 
-        public Quality Quality { get; set; }
+        protected Quality Quality { get; set; }
+
+        public bool IsOverdue
+        {
+            get { return SellInDays.IsOverdue; }
+        }
 
         public int DaysOverdue
         {
             get { return SellInDays.DaysOverdue; }
         }
 
+        public static IComparer<Item> ByQualityComparer
+        {
+            get { return new QualityComparer(); }
+        }
+
         public abstract void HandleDayChange();
 
         public override string ToString()
         {
-            return name;
+            return string.Format("{0} (quality {1}, sell in {2} days)", name, Quality, SellInDays);
         }
 
         protected bool Equals(Item other)
@@ -57,6 +68,14 @@ namespace GildedRose
                 hashCode = (hashCode * 397) ^ name.GetHashCode();
                 hashCode = (hashCode * 397) ^ Quality.GetHashCode();
                 return hashCode;
+            }
+        }
+
+        private class QualityComparer : IComparer<Item>
+        {
+            public int Compare(Item x, Item y)
+            {
+                return x.Quality.CompareTo(y.Quality);
             }
         }
     }

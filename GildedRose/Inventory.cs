@@ -10,12 +10,12 @@ namespace GildedRose
 
         public Item HighestValued
         {
-            get { return items.OrderBy(i => i.Quality).Last(); }
+            get { return items.OrderBy(i => i, Item.ByQualityComparer).Last(); }
         }
 
         public IEnumerable<Item> Overdue
         {
-            get { return items.Where(i => i.SellInDays.IsOverdue).ToArray(); }
+            get { return items.Where(i => i.IsOverdue).ToArray(); }
         }
 
         public IEnumerator<Item> GetEnumerator()
@@ -42,11 +42,6 @@ namespace GildedRose
                     item.HandleDayChange();
                 }
             }
-        }
-
-        public Item this[string dexterityVest]
-        {
-            get { throw new System.NotImplementedException(); }
         }
     }
 }
