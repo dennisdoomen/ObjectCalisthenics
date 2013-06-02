@@ -12,15 +12,13 @@ namespace GildedRose.Specs
     {
         private const int MaxBackstageSellin = 30;
         private const int MaxQuality = 50;
-        private GildedRose gildedRose;
         private Inventory inventory;
         private readonly Random rand = new Random(3456789);
 
         [TestInitialize]
         public void Setup()
         {
-            gildedRose = new GildedRose();
-            inventory = gildedRose.CreateInventory();
+            inventory = GildedRose.CreateInventory();
         }
 
         [TestMethod]
@@ -30,12 +28,12 @@ namespace GildedRose.Specs
 
             inventory.Should().Equal(new Item[]
             {
-                new DexterityVest(new SellInDays(9), new Quality(19)),
-                new AgedBrie(new SellInDays(1), new Quality(1)),
-                new ElixirOfTheMongoose(new SellInDays(4), new Quality(6)),
-                new Sulfuras(new SellInDays(0), new Quality(80)),
-                new BackstagePass(new SellInDays(14), new Quality(21)),
-                new ConjuredManaCake(new SellInDays(2), new Quality(5))
+                new DexterityVest(new Days(9), new Quality(19)),
+                new AgedBrie(new Days(1), new Quality(1)),
+                new ElixirOfTheMongoose(new Days(4), new Quality(6)),
+                new Sulfuras(new Days(0)),
+                new BackstagePass(new Days(14), new Quality(21)),
+                new ConjuredManaCake(new Days(2), new Quality(5))
             });
         }
 
@@ -46,12 +44,12 @@ namespace GildedRose.Specs
             
             inventory.Should().Equal(new Item[]
             {
-                new DexterityVest(new SellInDays(7), new Quality(17)),
-                new AgedBrie(new SellInDays(-1), new Quality(4)),
-                new ElixirOfTheMongoose(new SellInDays(2), new Quality(4)),
-                new Sulfuras(new SellInDays(0), new Quality(80)),
-                new BackstagePass(new SellInDays(12), new Quality(23)),
-                new ConjuredManaCake(new SellInDays(0), new Quality(3))
+                new DexterityVest(new Days(7), new Quality(17)),
+                new AgedBrie(new Days(-1), new Quality(4)),
+                new ElixirOfTheMongoose(new Days(2), new Quality(4)),
+                new Sulfuras(new Days(0)),
+                new BackstagePass(new Days(12), new Quality(23)),
+                new ConjuredManaCake(new Days(0), new Quality(3))
             });
         }
 
@@ -62,12 +60,12 @@ namespace GildedRose.Specs
 
             inventory.Should().Equal(new Item[]
             {
-                new DexterityVest(new SellInDays(-490), new Quality(0)),
-                new AgedBrie(new SellInDays(-498), new Quality(50)),
-                new ElixirOfTheMongoose(new SellInDays(-495), new Quality(0)),
-                new Sulfuras(new SellInDays(0), new Quality(80)),
-                new BackstagePass(new SellInDays(-485), new Quality(0)),
-                new ConjuredManaCake(new SellInDays(-497), new Quality(0))
+                new DexterityVest(new Days(-490), new Quality(0)),
+                new AgedBrie(new Days(-498), new Quality(50)),
+                new ElixirOfTheMongoose(new Days(-495), new Quality(0)),
+                new Sulfuras(new Days(0)),
+                new BackstagePass(new Days(-485), new Quality(0)),
+                new ConjuredManaCake(new Days(-497), new Quality(0))
             });
         }
 
@@ -92,7 +90,7 @@ namespace GildedRose.Specs
             };
 
             BackstagePass[] expectedItems = qualities.Select((quality, index) => 
-                new BackstagePass(new SellInDays(sellInDayses[index]), new Quality(quality))).ToArray();
+                new BackstagePass(new Days(sellInDayses[index]), new Quality(quality))).ToArray();
 
             inventory.Should().Equal(expectedItems);
         }
@@ -103,7 +101,7 @@ namespace GildedRose.Specs
             {
                 foreach (var item in inventory)
                 {
-                    item.HandleDayChange();
+                    item.OnDayHasPassed();
                 }
             }
         }
@@ -119,9 +117,9 @@ namespace GildedRose.Specs
             return inventory;
         }
 
-        private SellInDays RandomSellIn()
+        private Days RandomSellIn()
         {
-            return new SellInDays(rand.Next(MaxBackstageSellin));
+            return new Days(rand.Next(MaxBackstageSellin));
         }
 
         private Quality RandomQuality()
@@ -132,7 +130,7 @@ namespace GildedRose.Specs
         private Item ARandomBackstagePass()
         {
             Quality quality = RandomQuality();
-            SellInDays sellIn = RandomSellIn();
+            Days sellIn = RandomSellIn();
             
             return new BackstagePass(sellIn, quality);
         }

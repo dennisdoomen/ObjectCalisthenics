@@ -2,12 +2,12 @@ namespace GildedRose
 {
     public class Sulfuras : Item
     {
-        public Sulfuras(SellInDays sellIn, Quality quality)
-            : base("Sulfuras, Hand of Ragnaros", sellIn, quality)
+        public Sulfuras(Days shelfLife)
+            : base("Sulfuras, Hand of Ragnaros", shelfLife, new Quality(80))
         {
         }
 
-        public override void HandleDayChange()
+        public override void OnDayHasPassed()
         {
         }
     }

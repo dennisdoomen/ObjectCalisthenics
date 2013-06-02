@@ -6,26 +6,24 @@ namespace GildedRose
     public abstract class Item
     {
         private readonly string name;
+        private Days shelfLife;
+        private Quality quality;
 
-        protected Item(string name, SellInDays sellIn, Quality quality)
+        protected Item(string name, Days shelfLife, Quality quality)
         {
             this.name = name;
-            Quality = quality;
-            SellInDays = sellIn;
+            this.quality = quality;
+            this.shelfLife = shelfLife;
         }
 
-        protected SellInDays SellInDays { get; set; }
-
-        protected Quality Quality { get; set; }
-
-        public bool IsOverdue
+        public bool IsExpired
         {
-            get { return SellInDays.IsOverdue; }
+            get { return shelfLife < new Days(0); }
         }
 
-        public int DaysOverdue
+        public Days DaysOverdue
         {
-            get { return SellInDays.DaysOverdue; }
+            get { return (shelfLife > new Days(0)) ? new Days(0) : -shelfLife; }
         }
 
         public static IComparer<Item> ByQualityComparer
@@ -33,16 +31,21 @@ namespace GildedRose
             get { return new QualityComparer(); }
         }
 
-        public abstract void HandleDayChange();
+        public bool HasMaximumQuality
+        {
+            get { return quality.HasMaximumQuality; }
+        }
+
+        public abstract void OnDayHasPassed();
 
         public override string ToString()
         {
-            return string.Format("{0} (quality {1}, sell in {2} days)", name, Quality, SellInDays);
+            return string.Format("{0} (quality {1}, sell in {2} days)", name, quality, shelfLife);
         }
 
         protected bool Equals(Item other)
         {
-            return SellInDays.Equals(other.SellInDays) && string.Equals(name, other.name) && Quality.Equals(other.Quality);
+            return shelfLife.Equals(other.shelfLife) && string.Equals(name, other.name) && quality.Equals(other.quality);
         }
 
         public override bool Equals(object obj)
@@ -64,9 +67,9 @@ namespace GildedRose
         {
             unchecked
             {
-                int hashCode = SellInDays.GetHashCode();
+                int hashCode = shelfLife.GetHashCode();
                 hashCode = (hashCode * 397) ^ name.GetHashCode();
-                hashCode = (hashCode * 397) ^ Quality.GetHashCode();
+                hashCode = (hashCode * 397) ^ quality.GetHashCode();
                 return hashCode;
             }
         }
@@ -75,8 +78,33 @@ namespace GildedRose
         {
             public int Compare(Item x, Item y)
             {
-                return x.Quality.CompareTo(y.Quality);
+                return x.quality.CompareTo(y.quality);
             }
+        }
+
+        protected void IncreaseQuality()
+        {
+            quality = quality.Increase();
+        }
+
+        protected void ReduceShelfLife()
+        {
+            shelfLife = shelfLife.ReduceByOneDay();
+        }
+
+        protected void DecreaseQuality()
+        {
+            quality = quality.Decrease();
+        }
+
+        protected bool IsDueWithin(Days days)
+        {
+            return shelfLife < days;
+        }
+
+        protected void Devaluate()
+        {
+            quality = new Quality(0);
         }
     }
 }

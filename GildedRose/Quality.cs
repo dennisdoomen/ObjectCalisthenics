@@ -21,7 +21,7 @@ namespace GildedRose
             return !left.Equals(right);
         }
 
-        public bool IsSufficient
+        public bool HasMaximumQuality
         {
             get { return value >= 50; }
         }
@@ -68,7 +68,7 @@ namespace GildedRose
 
         public Quality Increase()
         {
-            if (!IsSufficient)
+            if (!HasMaximumQuality)
             {
                 return new Quality(value + 1);
             }

@@ -2,20 +2,19 @@ namespace GildedRose
 {
     public class ElixirOfTheMongoose : Item
     {
-        public ElixirOfTheMongoose(SellInDays sellIn, Quality quality)
-            : base("Elixir of the Mongoose", sellIn, quality)
+        public ElixirOfTheMongoose(Days shelfLife, Quality quality)
+            : base("Elixir of the Mongoose", shelfLife, quality)
         {
         }
 
-        public override void HandleDayChange()
+        public override void OnDayHasPassed()
         {
-            Quality = Quality.Decrease();
+            ReduceShelfLife();
+            DecreaseQuality();
 
-            SellInDays = SellInDays.Decrement();
-
-            if (SellInDays.IsOverdue)
+            if (IsExpired)
             {
-                Quality = Quality.Decrease();
+                DecreaseQuality();
             }
         }
     }

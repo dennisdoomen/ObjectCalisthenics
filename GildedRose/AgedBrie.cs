@@ -2,20 +2,20 @@ namespace GildedRose
 {
     public class AgedBrie : Item
     {
-        public AgedBrie(SellInDays sellIn, Quality quality)
-            : base("Aged Brie", sellIn, quality)
+        public AgedBrie(Days shelfLife, Quality quality)
+            : base("Aged Brie", shelfLife, quality)
         {
         }
 
-        public override void HandleDayChange()
+        public override void OnDayHasPassed()
         {
-            Quality = Quality.Increase();
-
-            SellInDays = SellInDays.Decrement();
-            if (SellInDays.IsOverdue)
+            ReduceShelfLife();
+            if (IsExpired)
             {
-                Quality = Quality.Increase();
+                IncreaseQuality();
             }
+        
+            IncreaseQuality();
         }
     }
 }

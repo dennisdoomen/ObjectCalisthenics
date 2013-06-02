@@ -13,9 +13,9 @@ namespace GildedRose
             get { return items.OrderBy(i => i, Item.ByQualityComparer).Last(); }
         }
 
-        public IEnumerable<Item> Overdue
+        public IEnumerable<Item> ExpiredItems
         {
-            get { return items.Where(i => i.IsOverdue).ToArray(); }
+            get { return items.Where(i => i.IsExpired).ToArray(); }
         }
 
         public IEnumerator<Item> GetEnumerator()
@@ -39,7 +39,7 @@ namespace GildedRose
             {
                 foreach (var item in items)
                 {
-                    item.HandleDayChange();
+                    item.OnDayHasPassed();
                 }
             }
         }

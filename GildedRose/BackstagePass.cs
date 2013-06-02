@@ -2,32 +2,31 @@ namespace GildedRose
 {
     public class BackstagePass : Item
     {
-        public BackstagePass(SellInDays sellIn, Quality quality)
-            : base("Backstage passes to a TAFKAL80ETC concert", sellIn, quality)
+        public BackstagePass(Days shelfLife, Quality quality)
+            : base("Backstage passes to a TAFKAL80ETC concert", shelfLife, quality)
         {
         }
 
-        public override void HandleDayChange()
+        public override void OnDayHasPassed()
         {
-            if (!Quality.IsSufficient)
+            ReduceShelfLife();
+            if (IsExpired)
             {
-                Quality = Quality.Increase();
-
-                if (SellInDays < new SellInDays(11))
-                {
-                    Quality = Quality.Increase();
-                }
-
-                if (SellInDays < new SellInDays(6))
-                {
-                    Quality = Quality.Increase();
-                }
+                Devaluate();
             }
-
-            SellInDays = SellInDays.Decrement();
-            if (SellInDays.IsOverdue)
+            else
             {
-                Quality = new Quality();
+                IncreaseQuality();
+
+                if (IsDueWithin(new Days(10)))
+                {
+                    IncreaseQuality();
+                }
+
+                if (IsDueWithin(new Days(5)))
+                {
+                    IncreaseQuality();
+                }
             }
         }
     }

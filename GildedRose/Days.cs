@@ -2,46 +2,41 @@ using System;
 
 namespace GildedRose
 {
-    public struct SellInDays : IComparable
+    public struct Days : IComparable
     {
         private readonly int value;
 
-        public SellInDays(int value)
+        public Days(int value)
         {
             this.value = value;
         }
 
-        public static bool operator ==(SellInDays left, SellInDays right)
+        public static bool operator ==(Days left, Days right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(SellInDays left, SellInDays right)
+        public static bool operator !=(Days left, Days right)
         {
             return !left.Equals(right);
         }
 
-        public static bool operator <(SellInDays left, SellInDays right)
+        public static bool operator <(Days left, Days right)
         {
             return left.value < right.value;
         }
 
-        public static bool operator >(SellInDays left, SellInDays right)
+        public static bool operator >(Days left, Days right)
         {
             return left.value > right.value;
         }
 
-        public bool IsOverdue
+        public static Days operator -(Days left)
         {
-            get { return value < 0; }
+            return new Days(-left.value);
         }
 
-        public int DaysOverdue
-        {
-            get { return Math.Max(0, -value); }
-        }
-
-        public bool Equals(SellInDays other)
+        public bool Equals(Days other)
         {
             return value == other.value;
         }
@@ -53,7 +48,7 @@ namespace GildedRose
                 return false;
             }
 
-            return obj is SellInDays && Equals((SellInDays)obj);
+            return obj is Days && Equals((Days)obj);
         }
 
         public override int GetHashCode()
@@ -63,7 +58,7 @@ namespace GildedRose
 
         public int CompareTo(object obj)
         {
-            return value.CompareTo(((SellInDays)obj).value);
+            return value.CompareTo(((Days)obj).value);
         }
 
         public override string ToString()
@@ -71,9 +66,9 @@ namespace GildedRose
             return value.ToString();
         }
 
-        public SellInDays Decrement()
+        public Days ReduceByOneDay()
         {
-            return new SellInDays(value - 1);
+            return new Days(value - 1);
         }
     }
 }

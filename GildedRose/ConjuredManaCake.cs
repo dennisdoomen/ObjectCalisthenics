@@ -2,19 +2,19 @@ namespace GildedRose
 {
     public class ConjuredManaCake : Item
     {
-        public ConjuredManaCake(SellInDays sellIn, Quality quality)
-            : base("Conjured Mana Cake", sellIn, quality)
+        public ConjuredManaCake(Days shelfLife, Quality quality)
+            : base("Conjured Mana Cake", shelfLife, quality)
         {
         }
 
-        public override void HandleDayChange()
+        public override void OnDayHasPassed()
         {
-            Quality = Quality.Decrease();
+            DecreaseQuality();
 
-            SellInDays = SellInDays.Decrement();
-            if (SellInDays.IsOverdue)
+            ReduceShelfLife();
+            if (IsExpired)
             {
-                Quality = Quality.Decrease();
+                DecreaseQuality();
             }
         }
     }
