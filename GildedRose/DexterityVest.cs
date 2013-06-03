@@ -1,5 +1,3 @@
-using System;
-
 namespace GildedRose
 {
     public class DexterityVest : Item
@@ -11,13 +9,13 @@ namespace GildedRose
 
         public override void OnDayHasPassed()
         {
-            DecreaseQuality();
-
             ReduceShelfLife();
             if (IsExpired)
             {
                 DecreaseQuality();
             }
+
+            DecreaseQuality();
         }
     }
 }

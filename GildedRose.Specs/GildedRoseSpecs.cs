@@ -1,5 +1,5 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
+using System.Xml.Serialization;
 
 using FluentAssertions;
 
@@ -10,22 +10,22 @@ namespace GildedRose.Specs
     [TestClass]
     public class GildedRoseSpecs
     {
-        private const int MaxBackstageSellin = 30;
-        private const int MaxQuality = 50;
-        private Inventory inventory;
-        private readonly Random rand = new Random(3456789);
-
-        [TestInitialize]
-        public void Setup()
-        {
-            inventory = GildedRose.CreateInventory();
-        }
-
         [TestMethod]
         public void After_one_day()
         {
-            RepeatUpdateQuality(1);
+            //--------------------------------------------------------------------
+            // Arrange
+            //--------------------------------------------------------------------
+            var inventory = new InventoryBuilder().Build();
 
+            //--------------------------------------------------------------------
+            // Act
+            //--------------------------------------------------------------------
+            inventory.HandleDayChanges(1);
+
+            //--------------------------------------------------------------------
+            // Assert
+            //--------------------------------------------------------------------
             inventory.Should().Equal(new Item[]
             {
                 new DexterityVest(new Days(9), new Quality(19)),
@@ -40,8 +40,19 @@ namespace GildedRose.Specs
         [TestMethod]
         public void After_three_days()
         {
-            RepeatUpdateQuality(3);
-            
+            //--------------------------------------------------------------------
+            // Arrange
+            //--------------------------------------------------------------------
+            var inventory = new InventoryBuilder().Build();
+
+            //--------------------------------------------------------------------
+            // Act
+            //--------------------------------------------------------------------
+            inventory.HandleDayChanges(3);
+
+            //--------------------------------------------------------------------
+            // Assert
+            //--------------------------------------------------------------------
             inventory.Should().Equal(new Item[]
             {
                 new DexterityVest(new Days(7), new Quality(17)),
@@ -56,8 +67,19 @@ namespace GildedRose.Specs
         [TestMethod]
         public void After_a_shitload_of_days()
         {
-            RepeatUpdateQuality(500);
+            //--------------------------------------------------------------------
+            // Arrange
+            //--------------------------------------------------------------------
+            var inventory = new InventoryBuilder().Build();
 
+            //--------------------------------------------------------------------
+            // Act
+            //--------------------------------------------------------------------
+            inventory.HandleDayChanges(500);
+
+            //--------------------------------------------------------------------
+            // Assert
+            //--------------------------------------------------------------------
             inventory.Should().Equal(new Item[]
             {
                 new DexterityVest(new Days(-490), new Quality(0)),
@@ -72,9 +94,25 @@ namespace GildedRose.Specs
         [TestMethod]
         public void Backstage_pass_golden_copy()
         {
-            inventory = ABunchOfBackstagePasses();
-            RepeatUpdateQuality(11);
-            
+            //--------------------------------------------------------------------
+            // Arrange
+            //--------------------------------------------------------------------
+            var builder = new InventoryBuilder();
+            for (int i = 0; i < 100; i++)
+            {
+                builder.With(new BackstagePassBuilder());
+            }
+
+            var inventory = builder.Build();
+
+            //--------------------------------------------------------------------
+            // Act
+            //--------------------------------------------------------------------
+            inventory.HandleDayChanges(11);
+
+            //--------------------------------------------------------------------
+            // Assert
+            //--------------------------------------------------------------------
             uint[] qualities =
             {
                 0, 49, 18, 33, 0, 28, 0, 12, 34, 25, 0, 0, 50, 12, 0, 0, 11, 0, 50, 28, 0, 0, 0, 0, 45, 0, 24, 50, 31, 50, 50, 0, 0, 0, 45, 29, 
@@ -93,46 +131,6 @@ namespace GildedRose.Specs
                 new BackstagePass(new Days(sellInDayses[index]), new Quality(quality))).ToArray();
 
             inventory.Should().Equal(expectedItems);
-        }
-
-        private void RepeatUpdateQuality(int times)
-        {
-            for (int i = 0; i < times; i++)
-            {
-                foreach (var item in inventory)
-                {
-                    item.OnDayHasPassed();
-                }
-            }
-        }
-
-        private Inventory ABunchOfBackstagePasses()
-        {
-            var inventory = new Inventory();
-            for (int i = 0; i < 100; i++)
-            {
-                inventory.Add(ARandomBackstagePass());
-            }
-
-            return inventory;
-        }
-
-        private Days RandomSellIn()
-        {
-            return new Days(rand.Next(MaxBackstageSellin));
-        }
-
-        private Quality RandomQuality()
-        {
-            return new Quality((uint)rand.Next(MaxQuality));
-        }
-
-        private Item ARandomBackstagePass()
-        {
-            Quality quality = RandomQuality();
-            Days sellIn = RandomSellIn();
-            
-            return new BackstagePass(sellIn, quality);
         }
     }
 }

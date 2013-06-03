@@ -9,13 +9,13 @@ namespace GildedRose
 
         public override void OnDayHasPassed()
         {
-            DecreaseQuality();
-
             ReduceShelfLife();
             if (IsExpired)
             {
                 DecreaseQuality();
             }
+
+            DecreaseQuality();
         }
     }
 }
