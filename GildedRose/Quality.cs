@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace GildedRose
+﻿namespace GildedRose
 {
     public struct Quality
     {
@@ -12,6 +7,11 @@ namespace GildedRose
         public Quality(uint value)
         {
             this.value = value;
+        }
+
+        public static implicit operator Quality(uint value)
+        {
+            return new Quality(value);
         }
 
         public static bool operator ==(Quality left, Quality right)
@@ -24,9 +24,37 @@ namespace GildedRose
             return !left.Equals(right);
         }
 
+        public static bool operator <(Quality x, uint y)
+        {
+            return x.value < y;
+        }
+
+        public static bool operator >(Quality x, uint y)
+        {
+            return x.value > y;
+        }
+
+        public static Quality operator +(Quality x, uint y)
+        {
+            return new Quality(x.value + y);
+        }
+        public static Quality operator -(Quality x, uint y)
+        {
+            return new Quality(x.value - y);
+        }
+        public static Quality operator -(Quality x, Quality y)
+        {
+            return new Quality(x.value - y.value);
+        }
+
         public bool Equals(Quality other)
         {
             return value == other.value;
+        }
+
+        public bool Equals(uint other)
+        {
+            return value == other;
         }
 
         public override bool Equals(object obj)
@@ -35,12 +63,14 @@ namespace GildedRose
             {
                 return false;
             }
-            return obj is Quality && Equals((Quality)obj);
+
+            return ((obj is Quality) && Equals((Quality) obj)) || 
+                ((obj is uint) && Equals((uint)obj));
         }
 
         public override int GetHashCode()
         {
-            return (int)value;
+            return (int) value;
         }
 
         public override string ToString()
