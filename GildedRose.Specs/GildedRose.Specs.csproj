@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BackstagePassBuilder.cs" />
+    <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="GildedRoseSpecs.cs" />
     <Compile Include="InventoryBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

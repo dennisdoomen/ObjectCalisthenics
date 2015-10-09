@@ -21,5 +21,11 @@ namespace GildedRose.Specs
             inventory.Add(builder.Build());
             return this;
         }
+
+        public InventoryBuilder With(Item item)
+        {
+            inventory.Add(item);
+            return this;
+        }
     }
 }

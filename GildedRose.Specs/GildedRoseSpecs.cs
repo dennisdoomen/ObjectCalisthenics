@@ -16,7 +16,14 @@ namespace GildedRose.Specs
             //--------------------------------------------------------------------
             // Arrange
             //--------------------------------------------------------------------
-            var inventory = new InventoryBuilder().Build();
+            var inventory = new InventoryBuilder()
+                .With(new DexterityVest(new Days(10), new Quality(20)))
+                .With(new AgedBrie(new Days(2), new Quality(0)))
+                .With(new ElixirOfTheMongoose(new Days(5), new Quality(7)))
+                .With(new Sulfuras(new Days(0)))
+                .With(new BackstagePass(new Days(15), new Quality(20)))
+                .With(new ConjuredManaCake(new Days(3), new Quality(6)))
+                .Build();
 
             //--------------------------------------------------------------------
             // Act
@@ -43,7 +50,14 @@ namespace GildedRose.Specs
             //--------------------------------------------------------------------
             // Arrange
             //--------------------------------------------------------------------
-            var inventory = new InventoryBuilder().Build();
+            var inventory = new InventoryBuilder()
+                .With(new DexterityVest(new Days(10), new Quality(20)))
+                .With(new AgedBrie(new Days(2), new Quality(0)))
+                .With(new ElixirOfTheMongoose(new Days(5), new Quality(7)))
+                .With(new Sulfuras(new Days(0)))
+                .With(new BackstagePass(new Days(15), new Quality(20)))
+                .With(new ConjuredManaCake(new Days(3), new Quality(6)))
+                .Build();
 
             //--------------------------------------------------------------------
             // Act
@@ -70,7 +84,14 @@ namespace GildedRose.Specs
             //--------------------------------------------------------------------
             // Arrange
             //--------------------------------------------------------------------
-            var inventory = new InventoryBuilder().Build();
+            var inventory = new InventoryBuilder()
+                .With(new DexterityVest(new Days(10), new Quality(20)))
+                .With(new AgedBrie(new Days(2), new Quality(0)))
+                .With(new ElixirOfTheMongoose(new Days(5), new Quality(7)))
+                .With(new Sulfuras(new Days(0)))
+                .With(new BackstagePass(new Days(15), new Quality(20)))
+                .With(new ConjuredManaCake(new Days(3), new Quality(6)))
+                .Build();
 
             //--------------------------------------------------------------------
             // Act
@@ -91,6 +112,7 @@ namespace GildedRose.Specs
             });
         }
 
+        // SMELL: Cause and effect is unclear
         [TestMethod]
         public void Backstage_pass_golden_copy()
         {
@@ -98,10 +120,11 @@ namespace GildedRose.Specs
             // Arrange
             //--------------------------------------------------------------------
             var builder = new InventoryBuilder();
-            for (int i = 0; i < 100; i++)
+
+            Enumerable.Range(0, 100).ForEach(() =>
             {
                 builder.With(new BackstagePassBuilder());
-            }
+            });
 
             var inventory = builder.Build();
 
