@@ -16,26 +16,17 @@ namespace GildedRose
             this.shelfLife = shelfLife;
         }
 
-        public bool IsExpired
-        {
-            get { return shelfLife < new Days(0); }
-        }
+        public bool IsExpired => (shelfLife < new Days(0));
 
-        public Days DaysOverdue
-        {
-            get { return (shelfLife > new Days(0)) ? new Days(0) : -shelfLife; }
-        }
+        public Days DaysOverdue => (shelfLife > new Days(0)) ? new Days(0) : -shelfLife;
 
-        public static IComparer<Item> ByQualityComparer
-        {
-            get { return new QualityComparer(); }
-        }
+        public static IComparer<Item> ByQualityComparer => new QualityComparer();
 
         public abstract void OnDayHasPassed();
 
         public override string ToString()
         {
-            return string.Format("{0} (quality {1}, sell in {2} days)", name, quality, shelfLife);
+            return $"{name} (quality {quality}, sell in {shelfLife} days)";
         }
 
         protected bool Equals(Item other)
